@@ -72,6 +72,6 @@ input[type="text"]{
 }
 
 .overline {
-    text-decoration: line-through!important;
+    text-decoration: line-through;
     color: rgba(87, 86, 86, 0.774);
 }

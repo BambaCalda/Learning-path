@@ -15,20 +15,21 @@ function renderTask(){
 
     array.forEach((item, idx) => {
         const li = document.createElement("li");
-        li.innerHTML = 
-        `<input type="checkbox" class="checkbox" id="item" ${item.state ? "checked" : ""}/>
-          <span class="${item.state ? "overline" : ""}">${item.description}</span>
-          <i id="trash" class="fa-solid fa-trash"></i>`;
+        li.innerHTML = `
+        <input type="checkbox" class="checkbox item" ${item.state ? "checked" : ""} />
+        <span class="${item.state ? "overline" : ""}">${item.description}</span>
+        <i class="trash fa-solid fa-trash"></i>
+        `;
         
         li.querySelector(".item").addEventListener("click", () => {
             array[idx].state = !array[idx].state;
             renderTask();
-        })
+        });
 
         li.querySelector(".trash").addEventListener("click", () => {
             array.splice(idx, 1);
             renderTask();
-        })
+        });
         list.appendChild(li);
     })
 }
