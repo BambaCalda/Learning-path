@@ -1,25 +1,34 @@
-const row = document.querySelector('.row');
-const list = document.querySelectorAll(".list");
-const listContainer = document.querySelector('.show');
-const item = document.getElementById("item");
-const itemname = document.getElementById("itemname");
+const addbtn = document.getElementById("addbtn");
+const task = document.getElementById("taskInput");
+const list = document.getElementById("list");
+const array = [];
 
-    document.querySelectorAll(".icoHide").forEach((icon) => {
-    icon.style.display = "none";
-    });
+addbtn.addEventListener("click", () => {
+    if(task.value.trim() === 0) return
+    array.push({state: false, description: task.value.trim()});
+    task.value = "";
+    renderTask();
+})
 
-item.addEventListener("click", () => {
-    row.classList.toggle("rotate");
-    listContainer.classList.toggle("show");
-});
+function renderTask(){
+    list.innerHTML = "";
 
-list.forEach((miniitem) => { 
-    miniitem.addEventListener("click", () => {
-        itemname.textContent = miniitem.textContent;
-        row.classList.toggle("rotate");
-        listContainer.classList.toggle("show");
-        document.querySelectorAll(".icoHide").forEach((icon) => {
-        icon.style.display = "none";
-     });
-        miniitem.querySelector('.icoHide').style.display = 'inline-block';
-})});
+    array.forEach((item, idx) => {
+        const li = document.createElement("li");
+        li.innerHTML = 
+        `<input type="checkbox" class="checkbox" id="item" ${item.state ? "checked" : ""}/>
+          <span class="${item.state ? "overline" : ""}">${item.description}</span>
+          <i id="trash" class="fa-solid fa-trash"></i>`;
+        
+        li.querySelector(".item").addEventListener("click", () => {
+            array[idx].state = !array[idx].state;
+            renderTask();
+        })
+
+        li.querySelector(".trash").addEventListener("click", () => {
+            array.splice(idx, 1);
+            renderTask();
+        })
+        list.appendChild(li);
+    })
+}
